@@ -5,9 +5,15 @@ import { StyledButton } from "./styled";
 type ButtonProps = {
   children: ReactNode;
   redirectPath?: string;
+  $special?: boolean;
 } & ComponentProps<typeof StyledButton>;
 
-const Button = ({ children, redirectPath, ...props }: ButtonProps) => {
+const Button = ({
+  children,
+  redirectPath,
+  $special = false,
+  ...props
+}: ButtonProps) => {
   const navigate = useNavigate();
 
   const handleClickNavigation = () => {
@@ -17,7 +23,11 @@ const Button = ({ children, redirectPath, ...props }: ButtonProps) => {
   };
 
   return (
-    <StyledButton {...props} onClick={handleClickNavigation}>
+    <StyledButton
+      {...props}
+      $special={$special}
+      onClick={handleClickNavigation}
+    >
       {children}
     </StyledButton>
   );
