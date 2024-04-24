@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{ $special?: boolean }>`
   margin: 10px;
   padding: 6px 10px;
   display: flex;
@@ -25,4 +25,20 @@ export const StyledButton = styled.button`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
     font-size: 14px;
   }
+
+  ${({ $special }) =>
+    $special &&
+    css`
+      /* position: absolute;
+      right: 0;
+      top: 0; */
+      border-radius: 50%;
+      background-color: ${({ theme }) => theme.color.special};
+      color: ${({ theme }) => theme.color.backgroundPrimary};
+
+      &:hover {
+        color: ${({ theme }) => theme.color.special};
+        background-color: ${({ theme }) => theme.color.backgroundSecondary};
+      }
+    `}
 `;
