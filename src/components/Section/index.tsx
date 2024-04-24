@@ -1,16 +1,26 @@
 import { ReactNode } from "react";
-import { SectionHeader, StyledSection } from "./styled";
+import { SectionHeader, StyledSection, Title, Wrapper } from "./styled";
 
 type SectionProps = {
   header: string;
+  title?: string;
+  $center?: boolean;
   children: ReactNode;
 };
 
-const Section = ({ header, children }: SectionProps) => {
+const Section = ({
+  header,
+  title,
+  $center = false,
+  children,
+}: SectionProps) => {
   return (
     <StyledSection>
       <SectionHeader>{header}</SectionHeader>
-      {children}
+      <Wrapper $center={$center}>
+        {title && <Title>{title}</Title>}
+        {children}
+      </Wrapper>
     </StyledSection>
   );
 };
