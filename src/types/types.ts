@@ -23,14 +23,14 @@ export type PetSpecies =
 
 export type Event = {
   eventId: string;
-  eventPetId: string;
-  eventCategory: EventCategory;
+  eventPet: string;
+  eventType: EventType;
   eventDescription: string;
   eventDate: string;
   eventAddDate: string;
   eventUpdateDate: string;
 };
 
-export type EventCategory = "groomer" | "vet" | "show" | "training" | "other";
+export type EventType = "groomer" | "vet" | "show" | "training" | "other";
 
 export type ValidationFunction = (value: string) => boolean;
