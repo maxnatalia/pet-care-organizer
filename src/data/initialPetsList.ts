@@ -9,7 +9,7 @@ export const initialPetsList: Pet[] = [
     breed: "Ara Severa",
     gender: "female",
     dateOfBirth: "2017-09-01",
-    petAddDate: "2017-10-20",
+    petAddDate: "20.05.2023",
     petUpdateDate: "",
   },
   {
@@ -20,7 +20,7 @@ export const initialPetsList: Pet[] = [
     breed: "Cavalier",
     gender: "male",
     dateOfBirth: "2020-11-05",
-    petAddDate: "2021-01-10",
+    petAddDate: "10.10.2022",
     petUpdateDate: "",
   },
 ];
