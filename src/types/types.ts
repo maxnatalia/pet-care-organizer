@@ -23,7 +23,7 @@ export type PetSpecies =
 
 export type Event = {
   eventId: string;
-  eventPet: string;
+  eventPetId: string;
   eventType: EventType;
   eventDescription: string;
   eventDate: string;
