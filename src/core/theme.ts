@@ -39,7 +39,7 @@ export const themeLight = {
     textPrimary: colorNames.tealDark,
     special: colorNames.orange,
     edit: colorNames.yellow,
-    remove: colorNames.red,
+    delete: colorNames.red,
   },
   breakpoint: {
     mobile: deviceSize.mobile,
@@ -55,8 +55,8 @@ export const themeDark = {
     textDefault: colorNames.carrara,
     textPrimary: colorNames.tealLight,
     special: colorNames.darkOrange,
-    edit: colorNames.yellow,
-    remove: colorNames.red,
+    edit: colorNames.darkYellow,
+    delete: colorNames.red,
   },
   breakpoint: {
     mobile: deviceSize.mobile,
