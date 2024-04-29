@@ -20,6 +20,7 @@ export const HorizontalWrapper = styled.div`
 `;
 
 export const Title = styled.h4`
+  text-transform: uppercase;
   font-size: 20px;
   font-weight: 500;
   color: ${({ theme }) => theme.color.special};
