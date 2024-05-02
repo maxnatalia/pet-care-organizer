@@ -8,6 +8,7 @@ export const useOpenDrawer = () => {
   };
 
   const handleClose = () => {
+    console.log("close");
     setIsOpen(false);
   };
 
