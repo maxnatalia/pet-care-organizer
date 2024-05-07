@@ -68,3 +68,8 @@ export const findPetNameById = (id: string, list: Pet[]): string => {
   const selectedPet = list.find(pet => pet.petId === id);
   return selectedPet ? selectedPet.petName : "";
 };
+
+export const getPetById = (
+  selectedPetId: Pet["petId"] | undefined,
+  list: Pet[]
+) => list.find(pet => pet.petId === selectedPetId);
