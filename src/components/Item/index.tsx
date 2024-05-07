@@ -15,6 +15,7 @@ import Drawer from "../Drawer";
 type ItemProps = {
   id: string;
   cardTitle: string;
+  path?: string;
   onDeleteItem: () => void;
   onEditItem: () => void;
   addDate: string;
@@ -25,6 +26,7 @@ type ItemProps = {
 const Item = ({
   id,
   cardTitle,
+  path,
   onDeleteItem,
   onEditItem,
   addDate,
@@ -43,7 +45,7 @@ const Item = ({
       </HorizontalWrapper>
       {isOpen && (
         <Drawer
-          path={"/"}
+          path={path ?? "/"}
           onDelete={onDeleteItem}
           onEdit={onEditItem}
           onClose={handleClose}
