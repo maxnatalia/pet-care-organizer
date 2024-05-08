@@ -7,7 +7,7 @@ export const initialEventsList: Event[] = [
     eventType: "groomer",
     eventDescription: "wizyta u groomera",
     eventDate: "2024-05-10",
-    eventAddDate: "05.03.2024",
+    eventAddDate: "5.03.2024",
     eventUpdateDate: "",
   },
   {
