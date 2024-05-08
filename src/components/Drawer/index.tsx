@@ -1,36 +1,46 @@
-import { MdDeleteForever } from "react-icons/md";
-import { MdEditDocument } from "react-icons/md";
-import { MdMore } from "react-icons/md";
-import { CloseIcon, StyledDrawer } from "./styled";
-import Button from "../Button";
 import { useNavigate } from "react-router-dom";
+import {
+  MdDeleteForever,
+  MdEditDocument,
+  MdClose,
+  MdMore,
+} from "react-icons/md";
+import Button from "../Button";
+import { StyledDrawer } from "./styled";
 
 type DrawerProps = {
   path: string;
-  onEdit: () => void;
-  onDelete: () => void;
+  onEditAction: () => void;
+  onDeleteAction: () => void;
   onClose: () => void;
 };
 
-const Drawer = ({ path, onEdit, onDelete, onClose }: DrawerProps) => {
+const Drawer = ({
+  path,
+  onEditAction,
+  onDeleteAction,
+  onClose,
+}: DrawerProps) => {
   const navigate = useNavigate();
 
   return (
     <StyledDrawer>
       <Button
-        $special
-        onClick={() => navigate(`${path}`)}
+        type="special"
+        onAction={() => navigate(`${path}`)}
         title={"Go to Single Pet Page"}
       >
         <MdMore />
       </Button>
-      <Button $edit onClick={onEdit} title="Edit">
+      <Button type="edit" onAction={onEditAction} title="Edit">
         <MdEditDocument />
       </Button>
-      <Button $delete onClick={onDelete} title="Delete">
+      <Button type="delete" onAction={onDeleteAction} title="Delete">
         <MdDeleteForever />
       </Button>
-      <CloseIcon title="Close" onClick={onClose} />
+      <Button type="default" title="Close" onAction={onClose}>
+        <MdClose />
+      </Button>
     </StyledDrawer>
   );
 };
