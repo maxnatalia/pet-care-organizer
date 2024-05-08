@@ -1,44 +1,16 @@
-import { ComponentProps, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { ReactNode } from "react";
 import { StyledButton } from "./styled";
 
 type ButtonProps = {
+  type: "edit" | "delete" | "special" | "default";
+  onAction: () => void;
+  title: string;
   children: ReactNode;
-  redirectPath?: string;
-  onClick?: () => void;
-  $special?: boolean;
-  $edit?: boolean;
-  $delete?: boolean;
-} & ComponentProps<typeof StyledButton>;
+};
 
-const Button = ({
-  children,
-  redirectPath,
-  onClick,
-  $special = false,
-  $edit = false,
-  $delete = false,
-  ...props
-}: ButtonProps) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    if (redirectPath) {
-      navigate(redirectPath);
-    }
-    if (onClick) {
-      onClick();
-    }
-  };
-
+const Button = ({ onAction, type, title, children }: ButtonProps) => {
   return (
-    <StyledButton
-      {...props}
-      $special={$special}
-      $edit={$edit}
-      $delete={$delete}
-      onClick={handleClick}
-    >
+    <StyledButton $type={type} onClick={onAction} title={title}>
       {children}
     </StyledButton>
   );
