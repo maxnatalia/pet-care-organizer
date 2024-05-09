@@ -26,19 +26,19 @@ const Drawer = ({
   return (
     <StyledDrawer>
       <Button
-        type="special"
-        onAction={() => navigate(`${path}`)}
+        $variety="special"
+        onClick={() => navigate(`${path}`)}
         title={"Go to Single Pet Page"}
       >
         <MdMore />
       </Button>
-      <Button type="edit" onAction={onEditAction} title="Edit">
+      <Button $variety="edit" onClick={onEditAction} title="Edit">
         <MdEditDocument />
       </Button>
-      <Button type="delete" onAction={onDeleteAction} title="Delete">
+      <Button $variety="delete" onClick={onDeleteAction} title="Delete">
         <MdDeleteForever />
       </Button>
-      <Button type="default" title="Close" onAction={onClose}>
+      <Button $variety="default" title="Close" onClick={onClose}>
         <MdClose />
       </Button>
     </StyledDrawer>
