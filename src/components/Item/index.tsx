@@ -8,49 +8,32 @@ import {
   StyledItem,
   Title,
 } from "./styled";
-import Button from "../Button";
-import { useOpenDrawer } from "../../hooks/useOpenDrawer";
-import Drawer from "../Drawer";
 
 type ItemProps = {
   id: string;
+  as?: "div" | "li";
   cardTitle: string;
-  path?: string;
-  onDeleteItem: () => void;
-  onEditItem: () => void;
   addDate: string;
   updateDate: string;
+  actionsField?: ReactNode;
   children: ReactNode;
 };
 
 const Item = ({
   id,
+  as = "li",
   cardTitle,
-  path,
-  onDeleteItem,
-  onEditItem,
   addDate,
   updateDate,
+  actionsField,
   children,
 }: ItemProps) => {
-  const { handleToggle, handleClose, isOpen } = useOpenDrawer();
-
   return (
-    <StyledItem key={id}>
+    <StyledItem key={id} as={as}>
       <HorizontalWrapper>
         <Title>{cardTitle}</Title>
-        <Button $special onClick={handleToggle}>
-          ...
-        </Button>
+        <div>{actionsField}</div>
       </HorizontalWrapper>
-      {isOpen && (
-        <Drawer
-          path={path ?? "/"}
-          onDelete={onDeleteItem}
-          onEdit={onEditItem}
-          onClose={handleClose}
-        />
-      )}
       <ChildrenBox>{children}</ChildrenBox>
       <Box>
         <span>
@@ -59,7 +42,7 @@ const Item = ({
         </span>
         <span>
           <Caption>updated:</Caption>
-          <Detail>{!updateDate && "---"}</Detail>
+          <Detail>{updateDate ? updateDate : "---"}</Detail>
         </span>
       </Box>
     </StyledItem>
