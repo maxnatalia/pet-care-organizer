@@ -9,7 +9,7 @@ export const StyledItem = styled.li`
   position: relative;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
-    min-width: 100%;
+    width: 100%;
   }
 `;
 
