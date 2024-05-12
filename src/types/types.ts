@@ -18,7 +18,7 @@ export type PetSpecies =
   | "parrot"
   | "fish"
   | "rabbit"
-  | "rodant"
+  | "rodent"
   | "other";
 
 export type Event = {
