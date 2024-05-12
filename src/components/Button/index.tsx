@@ -1,16 +1,14 @@
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { StyledButton } from "./styled";
 
 type ButtonProps = {
-  type: "edit" | "delete" | "special" | "default";
-  onAction: () => void;
-  title: string;
+  $variety: "edit" | "delete" | "special" | "default";
   children: ReactNode;
-};
+} & ComponentProps<typeof StyledButton>;
 
-const Button = ({ onAction, type, title, children }: ButtonProps) => {
+const Button = ({ $variety, children, ...props }: ButtonProps) => {
   return (
-    <StyledButton $type={type} onClick={onAction} title={title}>
+    <StyledButton {...props} $variety={$variety}>
       {children}
     </StyledButton>
   );
