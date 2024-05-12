@@ -1,14 +1,15 @@
 import styled, { css } from "styled-components";
 
 export const StyledButton = styled.button<{
-  $type: "edit" | "delete" | "special" | "default";
+  $variety: "edit" | "delete" | "special" | "default";
 }>`
   margin: 10px;
   padding: 6px 10px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
-  font-size: 18px;
+  gap: 4px;
+  font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
   border-width: 2px;
@@ -20,8 +21,8 @@ export const StyledButton = styled.button<{
     font-size: 14px;
   }
 
-  ${({ $type }) =>
-    $type === "default" &&
+  ${({ $variety }) =>
+    $variety === "default" &&
     css`
       border-color: ${({ theme }) => theme.color.textPrimary};
       color: ${({ theme }) => theme.color.textPrimary};
@@ -33,8 +34,8 @@ export const StyledButton = styled.button<{
       }
     `}
 
-  ${({ $type }) =>
-    $type === "special" &&
+  ${({ $variety }) =>
+    $variety === "special" &&
     css`
       border-color: ${({ theme }) => theme.color.special};
       color: ${({ theme }) => theme.color.special};
@@ -46,8 +47,8 @@ export const StyledButton = styled.button<{
       }
     `}
 
-  ${({ $type }) =>
-    $type === "edit" &&
+  ${({ $variety }) =>
+    $variety === "edit" &&
     css`
       border-color: ${({ theme }) => theme.color.edit};
       color: ${({ theme }) => theme.color.edit};
@@ -59,8 +60,8 @@ export const StyledButton = styled.button<{
       }
     `}
 
-    ${({ $type }) =>
-    $type === "delete" &&
+    ${({ $variety }) =>
+    $variety === "delete" &&
     css`
       border-color: ${({ theme }) => theme.color.delete};
       color: ${({ theme }) => theme.color.delete};
