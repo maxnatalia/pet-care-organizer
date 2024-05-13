@@ -5,7 +5,7 @@ export const StyledItem = styled.li`
   width: 300px;
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.color.backgroundPrimary};
+  background-color: ${({ theme }) => theme.color.backgroundSecondary};
   position: relative;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
