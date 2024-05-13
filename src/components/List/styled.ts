@@ -7,7 +7,7 @@ export const StyledList = styled.ul`
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 40px;
-  background-color: ${({ theme }) => theme.color.backgroundSecondary};
+  background-color: ${({ theme }) => theme.color.backgroundPrimary};
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
     padding: 20px 14px;
