@@ -1,14 +1,15 @@
-import BoxFieldForm from "../components/BoxFieldForm";
-import Form from "../components/Form";
-import { InputField } from "../components/InputField";
 import Section from "../../../components/Section";
-import usePetsContext from "../../../context/usePetsContext";
+import Form from "../components/Form";
+import BoxFieldForm from "../components/BoxFieldForm";
+import { InputField } from "../components/InputField";
 import { eventTypesOptions } from "../data/eventTypesOptions";
+import { eventPetNameOptions } from "../utils/formsHelpersFunctions";
+
 import useEventFormFields from "../hooks/useEventFormFields";
-import { eventPetNameOptions } from "../../../utils/helpersFunctions";
+import useAppContext from "../../../context/useAppContext";
 
 const EventForm = () => {
-  const { petsList } = usePetsContext();
+  const { petsList } = useAppContext();
   const {
     onFormSubmit,
     eventDate,
@@ -23,14 +24,28 @@ const EventForm = () => {
     eventTypeChangedHandler,
     eventDescription,
     eventDescriptionChangedHandler,
+    editableEventId,
+    handleCancelForm,
   } = useEventFormFields();
   const petsNameOptions = eventPetNameOptions(petsList);
 
   return (
-    <Section header="EVENT FORM" $center>
-      <Form onSubmit={onFormSubmit}>
-        <BoxFieldForm label="Event date *" error={eventDateHasError}>
+    <Section
+      header={editableEventId ? "EDIT EVENT FORM" : "ADD EVENT FORM"}
+      $center
+    >
+      <Form
+        onSubmit={onFormSubmit}
+        editableForm={editableEventId === ""}
+        onCancelForm={handleCancelForm}
+      >
+        <BoxFieldForm
+          label="Event date *"
+          error={eventDateHasError}
+          errorMsg="Date of event field is required. The event date cannot be earlier than today's date."
+        >
           <InputField
+            $error={eventDateHasError}
             type="date"
             name="eventDate"
             value={eventDate}
@@ -38,9 +53,14 @@ const EventForm = () => {
             onBlur={eventDateBlurHandler}
           />
         </BoxFieldForm>
-        <BoxFieldForm label="Event Pet Name *" error={eventPetHasError}>
+        <BoxFieldForm
+          label="Event Pet Name *"
+          error={eventPetHasError}
+          errorMsg="Pet name is required. Please select the animal for which the visit concerns."
+        >
           <InputField
             as="select"
+            $error={eventPetHasError}
             name="eventPet"
             value={eventPet}
             onChange={eventPetChangedHandler}
