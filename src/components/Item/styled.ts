@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const StyledItem = styled.li`
+export const StyledItem = styled.li<{ $card?: boolean }>`
   padding: 20px;
   width: 300px;
   display: flex;
@@ -11,6 +11,12 @@ export const StyledItem = styled.li`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
     width: 100%;
   }
+
+  ${({ $card }) =>
+    $card &&
+    css`
+      width: 100%;
+    `}
 `;
 
 export const HorizontalWrapper = styled.div`
@@ -26,9 +32,20 @@ export const Title = styled.h4`
   color: ${({ theme }) => theme.color.special};
 `;
 
-export const ChildrenBox = styled.div`
+export const ChildrenBox = styled.div<{ $card?: boolean }>`
   flex: 1;
   padding-bottom: 30px;
+
+  ${({ $card }) =>
+    $card &&
+    css`
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
+        grid-template-columns: 1fr;
+      }
+    `}
 `;
 
 export const Box = styled.div`

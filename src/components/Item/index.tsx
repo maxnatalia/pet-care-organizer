@@ -29,12 +29,12 @@ const Item = ({
   children,
 }: ItemProps) => {
   return (
-    <StyledItem key={id} as={as}>
+    <StyledItem key={id} as={as} $card={as === "div"}>
       <HorizontalWrapper>
         <Title>{cardTitle}</Title>
         <div>{actionsField}</div>
       </HorizontalWrapper>
-      <ChildrenBox>{children}</ChildrenBox>
+      <ChildrenBox $card={as === "div"}>{children}</ChildrenBox>
       <Box>
         <span>
           <Caption>added:</Caption>
