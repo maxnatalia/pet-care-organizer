@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
-import { StyledBoxFieldForm, Wrapper } from "./styled";
+import { ErrorMsg, Label, Wrapper } from "./styled";
 
 type BoxFieldFormProps = {
   children: ReactNode;
   label: string;
   $row?: boolean;
   error?: boolean;
+  errorMsg?: string;
 };
 
 const BoxFieldForm = ({
@@ -13,13 +14,14 @@ const BoxFieldForm = ({
   label,
   $row = false,
   error = false,
+  errorMsg = "Error Msg!",
 }: BoxFieldFormProps) => {
   return (
-    <StyledBoxFieldForm>
-      <label>{label}</label>
+    <div>
+      <Label>{label}</Label>
       <Wrapper $row={$row}>{children}</Wrapper>
-      {error && <p>Error Msg!</p>}
-    </StyledBoxFieldForm>
+      {error && <ErrorMsg>{errorMsg}</ErrorMsg>}
+    </div>
   );
 };
 
