@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const StyledForm = styled.form`
   padding: 40px;
   width: 80%;
-  border: 1px solid red;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.tablet}px) {
     padding: 20px;
@@ -29,4 +28,8 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+`;
+
+export const Asterisk = styled.div`
+  margin-top: 40px;
 `;
