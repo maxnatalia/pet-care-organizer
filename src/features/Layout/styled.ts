@@ -29,4 +29,8 @@ export const Main = styled.main`
   grid-area: main;
   padding: 20px;
   background: ${({ theme }) => theme.color.backgroundSecondary};
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
+    padding: 10px;
+  }
 `;
