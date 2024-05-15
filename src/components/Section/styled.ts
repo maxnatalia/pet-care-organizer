@@ -4,6 +4,11 @@ export const StyledSection = styled.section`
   padding: 20px;
   margin: 20px;
   background-color: ${({ theme }) => theme.color.backgroundPrimary};
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
+    padding: 0;
+    margin: 10px;
+  }
 `;
 
 export const SectionHeader = styled.h2`
@@ -16,6 +21,7 @@ export const SectionHeader = styled.h2`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
     font-size: 16px;
+    padding: 10px;
   }
 `;
 
