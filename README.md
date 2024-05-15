@@ -20,9 +20,10 @@ Feel free to see it!
 
 ### Functionalities
 
-- **Theme Customization**: Switch between dark and light themes to suit your preference. Additionally, your choice is saving in **Local Storage**
+- **Theme Customization**: Switch between dark and light themes to suit your preference. Additionally, your choice is saved in **Local Storage**
 - **Pet Management**: Add, edit, or delete pets effortlessly.
 - **Event Management**: Keep track of important events by adding, editing, or removing them.
+- **Local Storage**: All your data is saved in Local Storage.
 
 ## 🖇️Future Enhancements
 
@@ -37,6 +38,7 @@ This **responsive** project was bootstrapped with **React + TypeScript + Vite**,
 - [x] JavaScript ES6+
 - [x] MediaQueries
 - [x] React
+- [x] React-Router
 - [x] React hooks - useContext, custom hooks
 - [x] TypeScript
 - [x] Styled-components
