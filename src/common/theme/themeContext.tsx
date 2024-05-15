@@ -1,4 +1,5 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext } from "react";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 type ThemeContextType = {
   isDarkTheme: boolean;
@@ -9,27 +10,15 @@ type ThemeProviderProps = {
   children: React.ReactNode;
 };
 
-const LOCAL_STORAGE_KEY = "theme";
-
-const getInitialTheme = () => {
-  const themeFromLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEY);
-
-  return themeFromLocalStorage ? JSON.parse(themeFromLocalStorage) : false;
-};
-
 export const ThemeSwitcherContext = createContext<ThemeContextType | null>(
   null
 );
 
 export const ThemeSwitcherProvider = ({ children }: ThemeProviderProps) => {
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(getInitialTheme);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(isDarkTheme));
-  }, [isDarkTheme]);
+  const [isDarkTheme, setIsDarkTheme] = useLocalStorage("theme", false);
 
   const toggleTheme = () => {
-    setIsDarkTheme(prevState => !prevState);
+    setIsDarkTheme((prevState: boolean) => !prevState);
   };
 
   return (
@@ -43,3 +32,13 @@ export const ThemeSwitcherProvider = ({ children }: ThemeProviderProps) => {
     </ThemeSwitcherContext.Provider>
   );
 };
+
+// const getInitialTheme = () => {
+//   const themeFromLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+//   return themeFromLocalStorage ? JSON.parse(themeFromLocalStorage) : false;
+// };
+
+// useEffect(() => {
+//   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(isDarkTheme));
+// }, [isDarkTheme]);
