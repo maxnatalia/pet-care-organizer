@@ -1,23 +1,19 @@
 import { FormEvent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
-import useEventsContext from "../../../context/useEventsContext";
+import { EventType } from "../../../types/types";
+import { getEventById } from "../../../utils/helpersFunctions";
 import useField from "./useField";
 import {
-  isDateOfEventValid,
+  isDateOfEventValidAndNotEmpty,
   isNotEmpty,
-} from "../../../utils/helpersFunctions";
-import { EventType } from "../../../types/types";
-import { useNavigate } from "react-router-dom";
+} from "../utils/formsHelpersFunctions";
+import useAppContext from "../../../context/useAppContext";
 
 const useEventFormFields = () => {
   const navigate = useNavigate();
-  const {
-    setEventsList,
-    eventsList,
-    // editableEventId,
-    // setEditableEventId,
-    // getEventById,
-  } = useEventsContext();
+  const { setEventsList, eventsList, editableEventId, setEditableEventId } =
+    useAppContext();
 
   const {
     value: eventDate,
@@ -27,7 +23,7 @@ const useEventFormFields = () => {
     inputBlurHandler: eventDateBlurHandler,
     setEnteredValue: eventDateSetValue,
     setIsTouched: eventDateSetIsTouched,
-  } = useField({ validateValue: isDateOfEventValid });
+  } = useField({ validateValue: isDateOfEventValidAndNotEmpty });
 
   const {
     value: eventPet,
@@ -51,68 +47,63 @@ const useEventFormFields = () => {
     setEnteredValue: eventDescriptionSetValue,
   } = useField({ initialValue: "" });
 
-  //   useEffect(() => {
-  //     if (editableEventId) {
-  //       const editableEvent = getEventById(editableEventId);
-  //       if (editableEvent) {
-  //         eventNameSetValue(editableEvent.eventName);
-  //         eventDateSetValue(editableEvent.eventDate);
-  //         eventCategorySetValue(editableEvent.eventCategory);
-  //         eventPetNameSetValue(editableEvent.eventPetName);
-  //       }
-  //     }
-  //   }, [
-  //     editableEventId,
-  //     eventNameSetValue,
-  //     eventDateSetValue,
-  //     eventCategorySetValue,
-  //     eventPetNameSetValue,
-  //     getEventById,
-  //   ]);
+  useEffect(() => {
+    if (editableEventId) {
+      const editableEvent = getEventById(editableEventId, eventsList);
+      if (editableEvent) {
+        eventDateSetValue(editableEvent.eventDate);
+        eventPetSetValue(editableEvent.eventPetId);
+        eventTypeSetValue(editableEvent.eventType);
+        eventDescriptionSetValue(editableEvent.eventDescription);
+      }
+    }
+  }, [
+    eventsList,
+    editableEventId,
+    eventDateSetValue,
+    eventPetSetValue,
+    eventTypeSetValue,
+    eventDescriptionSetValue,
+  ]);
 
   const formIsValid = eventDateIsValid && eventPetIsValid;
 
-  const addEvent = () => {
-    const updatedList = [
-      ...eventsList,
-      {
-        eventId: nanoid(),
-        eventDate,
-        eventPetId: eventPet,
-        eventType: eventType as EventType,
-        eventDescription,
-        eventAddDate: new Date().toLocaleDateString(),
-        eventUpdateDate: "",
-      },
-    ];
-    setEventsList(updatedList);
+  const addOrUpdateEvent = () => {
+    const updatedEventsList = editableEventId
+      ? eventsList.map(item =>
+          item.eventId === editableEventId
+            ? {
+                ...item,
+                eventId: editableEventId,
+                eventDate,
+                eventPetId: eventPet,
+                eventType: eventType as EventType,
+                eventDescription,
+                eventUpdateDate: new Date().toLocaleDateString(),
+              }
+            : item
+        )
+      : [
+          ...eventsList,
+          {
+            eventId: nanoid(),
+            eventDate,
+            eventPetId: eventPet,
+            eventType: eventType as EventType,
+            eventDescription,
+            eventAddDate: new Date().toLocaleDateString(),
+            eventUpdateDate: "",
+          },
+        ];
+
+    setEventsList(updatedEventsList);
+    setEditableEventId("");
   };
 
-  //   const updatePetEvent = () => {
-  //     const findPetToUpdate = petsList.find(pet => pet.petName === eventPetName);
-  //     const updatedEvent = petsList.map(pet =>
-  //       pet.id === findPetToUpdate?.id
-  //         ? {
-  //             ...pet,
-  //             events: pet.events.map(event =>
-  //               event.eventId === editableEventId
-  //                 ? {
-  //                     eventId: editableEventId,
-  //                     eventName,
-  //                     eventDate,
-  //                     eventCategory: eventCategory as EventCategory,
-  //                     eventPetName,
-  //                     eventPetId: pet.id,
-  //                   }
-  //                 : event
-  //             ),
-  //           }
-  //         : pet
-  //     );
-
-  //     setPetsList(updatedEvent);
-  //     setEditableEventId("");
-  //   };
+  const handleCancelForm = () => {
+    navigate("/events");
+    setEditableEventId("");
+  };
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -122,9 +113,8 @@ const useEventFormFields = () => {
       eventPetSetIsTouched(true);
       return;
     }
-    addEvent();
-    navigate("/");
-    console.log(eventsList);
+    addOrUpdateEvent();
+    navigate("/events");
   };
 
   return {
@@ -141,6 +131,8 @@ const useEventFormFields = () => {
     eventTypeChangedHandler,
     eventDescription,
     eventDescriptionChangedHandler,
+    editableEventId,
+    handleCancelForm,
   };
 };
 
