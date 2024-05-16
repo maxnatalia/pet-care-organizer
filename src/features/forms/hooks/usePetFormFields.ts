@@ -1,17 +1,19 @@
 import { FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
+import { PetGender, PetSpecies } from "../../../types/types";
+import { getPetById } from "../../../utils/helpersFunctions";
 import useField from "./useField";
 import {
   isDateOfBirthValidAndNotEmpty,
   isNotEmpty,
-} from "../../../utils/helpersFunctions";
-import usePetsContext from "../../../context/usePetsContext";
-import { PetGender, PetSpecies } from "../../../types/types";
+} from "../utils/formsHelpersFunctions";
+import useAppContext from "../../../context/useAppContext";
 
 const usePetFormFields = () => {
   const navigate = useNavigate();
-  const { setPetsList, petsList } = usePetsContext();
+  const { setPetsList, petsList, editablePetId, setEditablePetId } =
+    useAppContext();
 
   const {
     value: petName,
@@ -61,64 +63,70 @@ const usePetFormFields = () => {
     setEnteredValue: petDescriptionSetValue,
   } = useField();
 
+  useEffect(() => {
+    if (editablePetId) {
+      const editablePet = getPetById(editablePetId, petsList);
+      if (editablePet) {
+        petNameSetValue(editablePet.petName);
+        breedSetValue(editablePet.breed);
+        dateOfBirthSetValue(editablePet.dateOfBirth);
+        petSpeciesSetValue(editablePet.petSpecies);
+        genderSetValue(editablePet.gender);
+        petDescriptionSetValue(editablePet.petDescription);
+      }
+    }
+  }, [
+    petsList,
+    editablePetId,
+    petNameSetValue,
+    breedSetValue,
+    petSpeciesSetValue,
+    genderSetValue,
+    petDescriptionSetValue,
+    dateOfBirthSetValue,
+  ]);
+
   const formIsValid = petNameIsValid && breedIsValid && dateOfBirthIsValid;
 
-  // const addOrUpdatePet = () => {
-  //   const updatedPetList = editableId
-  //     ? petsList.map(item =>
-  //         item.id === editableId
-  //           ? {
-  //               ...item,
-  //               id: editableId,
-  //               petName,
-  //               breed,
-  //               category: category as petSpecies,
-  //               gender,
-  //               description,
-  //               dateOfBirth,
-  //             }
-  //           : item
-  //       )
-  //     : [
-  //         ...petsList,
-  //         {
-  //           id: nanoid(),
-  //           petName,
-  //           breed,
-  //           category: category as petSpecies,
-  //           gender,
-  //           description,
-  //           dateOfBirth,
-  //           events: [],
-  //         },
-  //       ];
+  const addOrUpdatePet = () => {
+    const updatedPetList = editablePetId
+      ? petsList.map(item =>
+          item.petId === editablePetId
+            ? {
+                ...item,
+                petId: editablePetId,
+                petName,
+                breed,
+                dateOfBirth,
+                petSpecies: petSpecies as PetSpecies,
+                gender: gender as PetGender,
+                petDescription,
+                petUpdateDate: new Date().toLocaleDateString(),
+              }
+            : item
+        )
+      : [
+          ...petsList,
+          {
+            petId: nanoid(),
+            petName,
+            breed,
+            dateOfBirth,
+            petSpecies: petSpecies as PetSpecies,
+            gender: gender as PetGender,
+            petDescription,
+            petAddDate: new Date().toLocaleDateString(),
+            petUpdateDate: "",
+          },
+        ];
 
-  //   setPetsList(updatedPetList);
-  //   setEditableId("");
-  // };
+    setPetsList(updatedPetList);
+    setEditablePetId("");
+  };
 
-  // const handleCancelForm = () => {
-  //   navigate("/");
-  //   setEditableId("");
-  // };
-
-  const addPet = () => {
-    const updatedList = [
-      ...petsList,
-      {
-        petId: nanoid(),
-        petName,
-        breed,
-        petSpecies: petSpecies as PetSpecies,
-        gender: gender as PetGender,
-        dateOfBirth,
-        petDescription,
-        petAddDate: new Date().toLocaleDateString(),
-        petUpdateDate: "",
-      },
-    ];
-
-    setPetsList(updatedList);
+  const handleCancelForm = () => {
+    navigate("/pets");
+    setEditablePetId("");
   };
 
   const onFormSubmit = (e: FormEvent) => {
@@ -130,10 +138,8 @@ const usePetFormFields = () => {
       dateOfBirthSetIsTouched(true);
       return;
     }
-    // addOrUpdatePet();
-    addPet();
+    addOrUpdatePet();
     navigate("/pets");
-    console.log(petsList);
   };
 
   return {
@@ -156,6 +162,8 @@ const usePetFormFields = () => {
     dateOfBirthBlurHandler,
     dateOfBirthChangedHandler,
     dateOfBirthHasError,
+    editablePetId,
+    handleCancelForm,
   };
 };
 
