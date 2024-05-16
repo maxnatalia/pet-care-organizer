@@ -53,5 +53,6 @@ export const Title = styled.h3`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobile}px) {
     font-size: 14px;
+    padding: 10px;
   }
 `;
