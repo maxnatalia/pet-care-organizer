@@ -26,13 +26,24 @@ const PetForm = () => {
     dateOfBirthBlurHandler,
     dateOfBirthChangedHandler,
     dateOfBirthHasError,
+    editablePetId,
+    handleCancelForm,
   } = usePetFormFields();
 
   return (
-    <Section header="PET FORM" $center>
-      <Form onSubmit={onFormSubmit}>
-        <BoxFieldForm label="Pet name *" error={petNameHasError}>
+    <Section header={editablePetId ? "EDIT PET FORM" : "ADD PET FORM"} $center>
+      <Form
+        onSubmit={onFormSubmit}
+        onCancelForm={handleCancelForm}
+        editableForm={editablePetId === ""}
+      >
+        <BoxFieldForm
+          label="Pet name *"
+          error={petNameHasError}
+          errorMsg="Pet name field is required. Please provide at least 3 characters."
+        >
           <InputField
+            $error={petNameHasError}
             type="text"
             name="petName"
             value={petName}
@@ -40,8 +51,13 @@ const PetForm = () => {
             onBlur={petNameBlurHandler}
           />
         </BoxFieldForm>
-        <BoxFieldForm label="Breed *" error={breedHasError}>
+        <BoxFieldForm
+          label="Breed *"
+          error={breedHasError}
+          errorMsg="Breed field is required. Please provide at least 3 characters."
+        >
           <InputField
+            $error={breedHasError}
             type="text"
             name="breed"
             value={breed}
@@ -49,8 +65,13 @@ const PetForm = () => {
             onBlur={breedBlurHandler}
           />
         </BoxFieldForm>
-        <BoxFieldForm label="Date of Birth *" error={dateOfBirthHasError}>
+        <BoxFieldForm
+          label="Date of Birth *"
+          error={dateOfBirthHasError}
+          errorMsg="Date of birth field is required. The birth date cannot be later than today's date."
+        >
           <InputField
+            $error={dateOfBirthHasError}
             type="date"
             name="dateOfBirth"
             value={dateOfBirth}
